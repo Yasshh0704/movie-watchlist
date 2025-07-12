@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Watchlist</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-film"></i> Movie Watchlist</h1>
+                <button class="add-movie-btn" onclick="openAddMovieModal()">
+                    <i class="fas fa-plus"></i> Add Movie
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="watchlist">
+                <i class="fas fa-list"></i> My Watchlist
+            </button>
+            <button class="tab-btn" data-tab="recommendations">
+                <i class="fas fa-star"></i> Recommendations
+            </button>
+        </div>
+
+        <!-- Watchlist Section -->
+        <div class="tab-content active" id="watchlist-content">
+            <!-- Filters and Controls -->
+            <div class="controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search movies...">
+                </div>
+                <div class="filters">
+                    <select id="statusFilter">
+                        <option value="all">All Movies</option>
+                        <option value="unwatched">Unwatched</option>
+                        <option value="watched">Watched</option>
+                    </select>
+                    <select id="sortBy">
+                        <option value="added">Date Added</option>
+                        <option value="rating">Rating</option>
+                        <option value="release">Release Date</option>
+                        <option value="title">Title</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Movie Grid -->
+            <div class="movie-grid" id="movieGrid">
+                <!-- Movies will be dynamically added here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-film"></i>
+                <h3>No movies yet</h3>
+                <p>Start building your watchlist by adding your first movie!</p>
+                <button class="add-movie-btn" onclick="openAddMovieModal()">
+                    <i class="fas fa-plus"></i> Add Your First Movie
+                </button>
+            </div>
+        </div>
+
+        <!-- Recommendations Section -->
+        <div class="tab-content" id="recommendations-content">
+            <!-- Recommendation Tabs -->
+            <div class="recommendation-tabs">
+                <button class="rec-tab-btn active" data-rec-tab="hollywood">
+                    <i class="fas fa-film"></i> Hollywood
+                </button>
+                <button class="rec-tab-btn" data-rec-tab="bollywood">
+                    <i class="fas fa-music"></i> Bollywood
+                </button>
+                <button class="rec-tab-btn" data-rec-tab="webseries">
+                    <i class="fas fa-tv"></i> Web Series
+                </button>
+            </div>
+
+            <!-- Hollywood Recommendations -->
+            <div class="rec-content active" id="hollywood-content">
+                <h2>Top Hollywood Movies</h2>
+                <div class="recommendation-grid" id="hollywoodGrid">
+                    <!-- Hollywood movies will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Bollywood Recommendations -->
+            <div class="rec-content" id="bollywood-content">
+                <h2>Top Bollywood Movies</h2>
+                <div class="recommendation-grid" id="bollywoodGrid">
+                    <!-- Bollywood movies will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Web Series Recommendations -->
+            <div class="rec-content" id="webseries-content">
+                <h2>Top Web Series</h2>
+                <div class="recommendation-grid" id="webseriesGrid">
+                    <!-- Web series will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Movie Modal -->
+    <div class="modal" id="addMovieModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Movie to Watchlist</h2>
+                <button class="close-btn" onclick="closeAddMovieModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="search-section">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="movieSearchInput" placeholder="Search for a movie...">
+                    </div>
+                    <div class="search-results" id="searchResults">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
+                <div class="manual-entry">
+                    <h3>Or add manually</h3>
+                    <form id="manualMovieForm">
+                        <div class="form-group">
+                            <label for="movieTitle">Title</label>
+                            <input type="text" id="movieTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="movieYear">Year</label>
+                            <input type="number" id="movieYear" min="1900" max="2030">
+                        </div>
+                        <div class="form-group">
+                            <label for="moviePoster">Poster URL (optional)</label>
+                            <input type="url" id="moviePoster" placeholder="https://...">
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="closeAddMovieModal()">Cancel</button>
+                            <button type="submit" class="btn-primary">Add Movie</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div class="modal" id="ratingModal">
+        <div class="modal-content rating-modal">
+            <div class="modal-header">
+                <h2>Rate Movie</h2>
+                <button class="close-btn" onclick="closeRatingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="movie-info" id="ratingMovieInfo">
+                    <!-- Movie info will be displayed here -->
+                </div>
+                <div class="rating-section">
+                    <h3>Your Rating</h3>
+                    <div class="star-rating" id="starRating">
+                        <i class="fas fa-star" data-rating="1"></i>
+                        <i class="fas fa-star" data-rating="2"></i>
+                        <i class="fas fa-star" data-rating="3"></i>
+                        <i class="fas fa-star" data-rating="4"></i>
+                        <i class="fas fa-star" data-rating="5"></i>
+                    </div>
+                    <p class="rating-text">Click on a star to rate</p>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeRatingModal()">Cancel</button>
+                    <button type="button" class="btn-primary" onclick="saveRating()">Save Rating</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
